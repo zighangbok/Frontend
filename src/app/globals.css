@@ -1,15 +1,15 @@
 @import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css');
 
-/*@import "tailwindcss";*/
-
-@import "tailwindcss/preflight";
-
+@import "tailwindcss";
 @import "tw-animate-css";
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
 /*---break---*/
 
 @custom-variant dark (&:is(.dark *));
-@tailwind utilities;
 
 @theme inline {
   --color-background: var(--background);
