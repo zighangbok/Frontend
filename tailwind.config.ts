@@ -12,7 +12,7 @@ const config: Config = {
         pretendard: ['Pretendard', 'sans-serif'],
       },
       colors: {
-        primary: '#1E40AF',
+        primary: '#7A52FF',
         secondary: '#F59E0B',
       },
     },
