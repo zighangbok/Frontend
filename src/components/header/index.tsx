@@ -3,6 +3,7 @@
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 
+// TODO: 검색창 클릭시 하단에 뜨는 거, 좌측 메뉴 반응형
 export default function Header() {
   const router = useRouter();
 
