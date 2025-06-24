@@ -30,7 +30,7 @@ export default function Header() {
         {navMenu.map((item) => (
           <div
             key={item}
-            className="relative hidden font-medium text-[#353535] sm:block"
+            className="relative hidden cursor-pointer font-medium text-[#353535] sm:block"
           >
             {item}
           </div>
@@ -56,7 +56,7 @@ export default function Header() {
           </div>
         </div>
 
-        <div className="relative hidden font-medium text-[#353535] sm:block">
+        <div className="relative hidden cursor-pointer font-medium text-[#353535] sm:block">
           기업회원
         </div>
 
