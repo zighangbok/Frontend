@@ -1,14 +1,20 @@
-import axios from 'axios';
+import { axiosInstance } from '@/lib/axios';
 import { AuthRequest } from '@/types/join';
 
 // 로그인
 export async function login({ userId, password }: AuthRequest) {
-  const res = await axios.post('/api/users/login', { userId, password });
+  const res = await axiosInstance.post('/api/users/login', {
+    userId,
+    password,
+  });
   return res.data;
 }
 
 // 회원가입
 export async function signup({ userId, password }: AuthRequest) {
-  const res = await axios.post('/api/users/signup', { userId, password });
+  const res = await axiosInstance.post('/api/users/signup', {
+    userId,
+    password,
+  });
   return res.data;
 }
