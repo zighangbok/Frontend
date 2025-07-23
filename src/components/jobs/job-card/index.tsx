@@ -1,8 +1,9 @@
 'use client';
 
+import { useRouter } from 'next/navigation';
 import { Bookmark, Eye } from 'lucide-react';
 import { SimpleRecruit } from '@/types/recruit';
-import Image from 'next/image';
+import { handleJobCardClick } from '@/utils/clickTracker';
 
 // 기업 이미지가 없을 시 랜덤으로 색상 배정
 const tagColors = [
@@ -23,9 +24,19 @@ export default function JobCard({
   title,
 }: Omit<SimpleRecruit, 'color'>) {
   const tagColor = getRandomColor();
+  const router = useRouter();
+
+  const handleClick = () => {
+    handleJobCardClick();
+
+    router.push('/blank');
+  };
 
   return (
-    <div className="mx-4 flex h-[120px] w-full flex-[1_0_0] cursor-pointer items-center gap-2 rounded-[24px] border border-[#EDEDED] shadow-[0px_4px_30px_0px_#00000008] transition-shadow hover:shadow-[0px_6px_16px_rgba(0,0,0,0.08)] md:mx-0 md:h-[164px] md:pl-[20px]">
+    <div
+      onClick={handleClick}
+      className="mx-4 flex h-[120px] w-full flex-[1_0_0] cursor-pointer items-center gap-2 rounded-[24px] border border-[#EDEDED] shadow-[0px_4px_30px_0px_#00000008] transition-shadow hover:shadow-[0px_6px_16px_rgba(0,0,0,0.08)] md:mx-0 md:h-[164px] md:pl-[20px]"
+    >
       {/* 좌측 영역(공고 정보) */}
       <div className="flex flex-1 flex-row items-center gap-2.5 md:gap-6">
         {/* 왼쪽 로고 영역 */}
