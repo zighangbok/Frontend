@@ -30,10 +30,10 @@ export default function JobCard({
   const router = useRouter();
 
   const handleClick = async () => {
-    const deviceId = Cookies.get('JSESSIONID');
+    const deviceId = Cookies.get('userId');
 
     if (!deviceId) {
-      console.error('JSESSIONID 쿠키가 없습니다.');
+      console.error('userId 쿠키가 없습니다.');
       return;
     }
 

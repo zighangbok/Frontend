@@ -7,6 +7,7 @@ import { Label } from '@/components/ui/label';
 import { useState } from 'react';
 import { login } from '@/apis/join';
 import { toast } from 'sonner';
+import Cookies from 'js-cookie';
 
 interface LoginFormProps extends React.ComponentProps<'form'> {
   onSwitch?: () => void;
@@ -22,7 +23,12 @@ export default function LoginForm({ onSwitch, ...props }: LoginFormProps) {
     e.preventDefault();
 
     try {
-      await login({ userId, password });
+      const res = await login({ userId, password });
+
+      console.log(res);
+
+      Cookies.set('userId', res.userId, { expires: 1 });
+
       toast.success('로그인 성공');
 
       // 로그인 성공시, 공고 페이지로 라우팅
