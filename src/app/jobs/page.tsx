@@ -3,7 +3,7 @@
 import Header from '@/components/header';
 import TabMenu from '@/components/jobs/tab-menu';
 import JobCard from '@/components/jobs/job-card';
-import { useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -14,9 +14,10 @@ import { Button } from '@/components/ui/button';
 import Image from 'next/image';
 import { Switch } from '@/components/ui/switch';
 import { cn } from '@/lib/utils';
-import SlideFilterBar from '@/components/jobs/slide-filter-bar';
 import FilterModal from '@/components/jobs/filter-modal';
 import { recruitList } from '@/data/dummy-recruit';
+import { SimpleRecruit } from '@/types/recruit';
+import { getRecruitmentSimpleList } from '@/apis/recruit';
 
 // 정렬 옵션 타입 및 레이블
 type SortOption =
@@ -48,10 +49,45 @@ const parseDday = (dDay?: string): number => {
 
 export default function Jobs() {
   const [sortOption, setSortOption] = useState<SortOption>('recommend');
+  const [recruits, setRecruits] = useState<SimpleRecruit[]>([]);
+  const [page, setPage] = useState(0);
+  const [isFetching, setIsFetching] = useState(false);
+  const observerRef = useRef<HTMLDivElement | null>(null);
+
   const [filterModalOpen, setFilterModalOpen] = useState(false);
   const [selectedFilters, setSelectedFilters] = useState<
     Record<string, string[]>
   >({});
+
+  // 데이터 로드
+  const loadMore = useCallback(async () => {
+    if (isFetching) return;
+    setIsFetching(true);
+    try {
+      const newRecruits = await getRecruitmentSimpleList(page);
+      setRecruits((prev) => [...prev, ...newRecruits]);
+      setPage((prev) => prev + 1);
+    } finally {
+      setIsFetching(false);
+    }
+  }, [page, isFetching]);
+
+  // 무한 스크롤 인터섹션 옵저버
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting) loadMore();
+      },
+      { threshold: 1.0 },
+    );
+    if (observerRef.current) observer.observe(observerRef.current);
+    return () => observer.disconnect();
+  }, [loadMore]);
+
+  // 페이지 진입 시 1회 호출
+  useEffect(() => {
+    loadMore();
+  }, []);
 
   const sortedList = useMemo(() => {
     const list = [...recruitList];
@@ -96,10 +132,10 @@ export default function Jobs() {
       </div>
 
       <div className="mt-6 px-10">
-        <SlideFilterBar
-          onOpenFilter={() => setFilterModalOpen(true)}
-          activeFilter={undefined}
-        />
+        {/*<SlideFilterBar*/}
+        {/*  onOpenFilter={() => setFilterModalOpen(true)}*/}
+        {/*  activeFilter={undefined}*/}
+        {/*/>*/}
 
         <div className="relative w-full overflow-visible md:mx-auto md:max-w-screen-xl md:px-10">
           {/* 상단 필터/정렬 UI */}
@@ -158,10 +194,13 @@ export default function Jobs() {
           </div>
 
           <div className="box-border flex w-full flex-grow flex-col items-start gap-2.5 px-4 pt-0 pb-10 lg:grid lg:grid-cols-2 lg:content-start lg:justify-between lg:gap-4 lg:px-0 lg:pt-0 lg:pb-12">
-            {recruitList.map((recruit, index) => (
+            {recruits.map((recruit, index) => (
               <JobCard key={index} {...recruit} />
             ))}
           </div>
+
+          {/* 스크롤 감지 */}
+          <div ref={observerRef} className="h-[1px] w-full"></div>
         </div>
       </div>
 

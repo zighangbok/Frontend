@@ -12,3 +12,9 @@ export interface RecruitCardData {
   status: '디데이' | '상시' | '채용시 마감';
   dDay?: string; // 'D-10', 'D+2' 등
 }
+
+export interface SimpleRecruit {
+  uuid: string;
+  title: string;
+  companyName: string;
+}
