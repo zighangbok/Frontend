@@ -14,3 +14,11 @@ export async function getRecruitmentSimpleList(
   });
   return res.data;
 }
+
+// 추천 공고 불러오기
+export async function getRecruitmentRecommendationList(): Promise<
+  SimpleRecruit[]
+> {
+  const res = await axiosInstance.get('/recruitments/recommendations');
+  return res.data;
+}
