@@ -1,6 +1,5 @@
 import { axiosInstance } from '@/lib/axios';
 import { SimpleRecruit } from '@/types/recruit';
-import { AuthRequest } from '@/types/join';
 
 // 일반 공고 불러오기
 export async function getRecruitmentSimpleList(
