@@ -1,4 +1,5 @@
 import Cookies from 'js-cookie';
+import { postRecruitmentRerank } from '@/apis/recruit';
 
 const COOKIE_KEY = 'jobClickCount';
 const MAX_COUNT = 5;
@@ -9,8 +10,7 @@ export async function handleJobCardClick() {
 
   if (newCount >= MAX_COUNT) {
     try {
-      // TODO: API 호출
-      // await 함수명();
+      await postRecruitmentRerank();
       Cookies.remove(COOKIE_KEY);
     } catch (err) {
       console.error('API 호출 실패:', err);
