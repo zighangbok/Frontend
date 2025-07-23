@@ -1,7 +1,15 @@
-import type { NextConfig } from "next";
+import type { NextConfig } from 'next';
 
 const nextConfig: NextConfig = {
-  /* config options here */
+  async redirects() {
+    return [
+      {
+        source: '/',
+        destination: '/join', // 시작 페이지를 /join으로 설정
+        permanent: true,
+      },
+    ];
+  },
 };
 
 export default nextConfig;
