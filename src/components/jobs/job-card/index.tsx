@@ -1,8 +1,10 @@
 'use client';
 
+import Cookies from 'js-cookie';
 import { useRouter } from 'next/navigation';
 import { Bookmark, Eye } from 'lucide-react';
 import { SimpleRecruit } from '@/types/recruit';
+import { postClickLog } from '@/apis/click-log';
 import { handleJobCardClick } from '@/utils/clickTracker';
 
 // 기업 이미지가 없을 시 랜덤으로 색상 배정
@@ -27,9 +29,21 @@ export default function JobCard({
   const tagColor = getRandomColor();
   const router = useRouter();
 
-  const handleClick = () => {
-    handleJobCardClick(uuid);
+  const handleClick = async () => {
+    const deviceId = Cookies.get('JSESSIONID');
 
+    if (!deviceId) {
+      console.error('JSESSIONID 쿠키가 없습니다.');
+      return;
+    }
+
+    // 1. 매 클릭마다 로그 전송
+    await postClickLog({ deviceId, itemId: uuid });
+
+    // 2. 누적 클릭 5회 시 rerank 호출
+    await handleJobCardClick(uuid);
+
+    // 3. 라우팅
     router.push('/blank');
   };
 
