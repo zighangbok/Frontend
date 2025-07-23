@@ -2,8 +2,8 @@
 
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
+import { User } from 'lucide-react';
 
-// TODO: 검색창 클릭시 하단에 뜨는 거, 좌측 메뉴 반응형
 export default function Header() {
   const router = useRouter();
 
@@ -60,12 +60,16 @@ export default function Header() {
           기업회원
         </div>
 
-        <button
-          onClick={() => router.push('/join')}
-          className="md:border-line ds-Button2-16sb flex min-h-8 cursor-pointer items-center justify-center px-2 font-semibold text-[#6F00B6] md:min-h-10 md:rounded-lg md:border md:px-4 md:py-[0px]"
-        >
-          로그인/회원가입
-        </button>
+        <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[#7a52ff26] hover:bg-purple-200 active:bg-purple-300">
+          <User className="text-primary" />
+        </div>
+
+        {/*<button*/}
+        {/*  onClick={() => router.push('/join')}*/}
+        {/*  className="md:border-line ds-Button2-16sb flex min-h-8 cursor-pointer items-center justify-center px-2 font-semibold text-[#6F00B6] md:min-h-10 md:rounded-lg md:border md:px-4 md:py-[0px]"*/}
+        {/*>*/}
+        {/*  로그인/회원가입*/}
+        {/*</button>*/}
       </div>
     </div>
   );
