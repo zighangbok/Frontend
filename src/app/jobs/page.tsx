@@ -143,8 +143,7 @@ export default function Jobs() {
             <div className="flex items-center gap-3">
               <div className="flex items-center">
                 총{' '}
-                <span className="ml-2 text-[#7951FF]">{sortedList.length}</span>
-                건
+                <span className="ml-2 text-[#7951FF]">{recruits.length}</span>건
               </div>
 
               <div className="mr-2.5 ml-2.5 h-4 w-[1.5px] shrink-0 bg-[#EDEDED]" />
