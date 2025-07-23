@@ -24,7 +24,9 @@ export async function getRecruitmentRecommendationList(): Promise<
 }
 
 // 공고 5회 클릭시 api 호출
-export async function postRecruitmentRerank() {
-  const res = await axiosInstance.post('/recruitments/recommendations/rerank');
+export async function postRecruitmentRerank(uuids: string[]) {
+  const res = await axiosInstance.post('/recruitments/recommendations/rerank', {
+    samples: uuids,
+  });
   return res.data;
 }

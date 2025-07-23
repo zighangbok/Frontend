@@ -22,12 +22,13 @@ function getRandomColor() {
 export default function JobCard({
   companyName,
   title,
+  uuid,
 }: Omit<SimpleRecruit, 'color'>) {
   const tagColor = getRandomColor();
   const router = useRouter();
 
   const handleClick = () => {
-    handleJobCardClick();
+    handleJobCardClick(uuid);
 
     router.push('/blank');
   };
